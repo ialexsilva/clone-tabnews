@@ -7,14 +7,7 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-  });
-
-  console.log("Credenciais do banco de dados: ", {
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: process.env.POSTGRES_USER,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
+    ssl: getSSLValues(),
   });
 
   try {
@@ -27,6 +20,16 @@ async function query(queryObject) {
   } finally {
     await client.end();
   }
+}
+
+function getSSLValues() {
+  if (process.env.POSTGRESS_CA) {
+    return {
+      ca: process.env.POSTGRESS_CA,
+    };
+  }
+
+  return process.env.NODE_ENV === "development" ? false : true;
 }
 
 export default {
