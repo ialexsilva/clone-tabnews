@@ -4,7 +4,8 @@ import database from "infra/database";
 
 export default async function migrations(request, response) {
   const dbClient = await database.getNewClient();
-  const defaultMigrationsOptions = {
+
+  const defaultMigrationOptions = {
     dbClient: dbClient,
     dryRun: true,
     dir: join("infra", "migrations"),
@@ -14,16 +15,14 @@ export default async function migrations(request, response) {
   };
 
   if (request.method === "GET") {
-    const pendingMigrations = await migrationRunner({
-      ...defaultMigrationsOptions,
-    });
+    const pendingMigrations = await migrationRunner(defaultMigrationOptions);
     await dbClient.end();
     return response.status(200).json(pendingMigrations);
   }
 
   if (request.method === "POST") {
     const migratedMigrations = await migrationRunner({
-      ...defaultMigrationsOptions,
+      ...defaultMigrationOptions,
       dryRun: false,
     });
 
@@ -36,5 +35,5 @@ export default async function migrations(request, response) {
     return response.status(200).json(migratedMigrations);
   }
 
-  response.status(405).end();
+  return response.status(405).end();
 }
