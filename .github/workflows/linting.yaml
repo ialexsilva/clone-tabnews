@@ -1,10 +1,10 @@
-name: Automated Tests
+name: Linting
 
 on: pull_request
 
 jobs:
-  jest:
-    name: Jest Ubuntu
+  prettier:
+    name: Prettier
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,5 +14,5 @@ jobs:
           node-version-file: ".nvmrc"
       - name: Install dependencies
         run: npm ci
-      - name: Run tests
-        run: npm test
+      - name: Run Prettier
+        run: npm run lint:prettier:check
