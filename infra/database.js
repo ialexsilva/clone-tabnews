@@ -28,11 +28,6 @@ async function getNewClient() {
   return client;
 }
 
-export default {
-  query,
-  getNewClient,
-};
-
 function getSSLValues() {
   if (process.env.POSTGRES_CA) {
     return {
@@ -42,3 +37,10 @@ function getSSLValues() {
 
   return process.env.NODE_ENV === "production" ? true : false;
 }
+
+const database = {
+  query,
+  getNewClient,
+};
+
+export default database;
