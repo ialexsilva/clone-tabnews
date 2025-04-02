@@ -14,8 +14,8 @@ describe("POST /api/v1/status", () => {
 
       const responseBody = await response.json();
       expect(responseBody).toEqual({
-        name: "MethodNotAllowed",
-        message: "Método não permitido para este endpoint",
+        name: "MethodNotAllowedError",
+        message: "Método não permitido para este endpoint.",
         action:
           "Verifique se o método HTTP utilizado é valido para o endpoint.",
         status_code: 405,
