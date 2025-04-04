@@ -1,5 +1,3 @@
-const { notFound } = require("next/navigation");
-
 exports.up = (pgm) => {
   pgm.createTable("users", {
     id: {
